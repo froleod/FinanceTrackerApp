@@ -46,12 +46,6 @@ public class Budget extends NamedBaseEntity {
     @Column(name = "amount")
     private BigDecimal amount;
 
-//    @Column(name = "start_date", nullable = false)
-//    private LocalDate startDate;
-//
-//    @Column(name = "end_date")
-//    private LocalDate endDate;
-
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BudgetStatus status;

@@ -11,27 +11,30 @@
   <h2>Your Financial Goals</h2>
   <table class="table">
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Target Amount</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
+    <tr>
+      <th>Name</th>
+      <th>Target Amount</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
     </thead>
     <tbody>
-      <tr th:each="goal : ${financialGoals}">
-        <td th:text="${goal.name}"></td>
-        <td th:text="${goal.targetAmount}"></td>
-        <td th:text="${goal.status}"></td>
-        <td>
-          <a th:href="@{/financial-goals/edit/{id}(id=${goal.id})}" class="btn btn-warning btn-sm">Edit</a>
-          <a th:href="@{/financial-goals/delete/{id}(id=${goal.id})}" class="btn btn-danger btn-sm">Delete</a>
-        </td>
-      </tr>
+    <tr th:each="goal : ${financialGoals}">
+      <td th:text="${goal.name}"></td>
+      <td th:text="${goal.targetAmount}"></td>
+      <td th:text="${goal.status.name()}"></td>
+      <td>
+        <a th:href="@{/financial-goals/{id}/transactions(id=${goal.id})}" class="btn btn-info btn-sm">View Transactions</a>
+        <a th:href="@{/financial-goals/{id}/create-transaction(id=${goal.id})}" class="btn btn-primary btn-sm">Add Transaction</a>
+        <a th:href="@{/financial-goals/edit/{id}(id=${goal.id})}" class="btn btn-warning btn-sm">Edit</a>
+        <a th:href="@{/financial-goals/delete/{id}(id=${goal.id})}" class="btn btn-danger btn-sm">Delete</a>
+        <!-- Дополнительные действия, такие как Редактирование и Удаление -->
+      </td>
+    </tr>
     </tbody>
   </table>
-  <a href="/financial-goals/create" class="btn btn-success">Add New Goal</a>
-  <a href="/" class="btn btn-secondary">Back to Home</a>
+  <a href="/financial-goals/create" class="btn btn-success mt-3">Add New Goal</a>
+  <a href="/" class="btn btn-secondary mt-3">Back to Home</a>
 </div>
 </body>
 </html>

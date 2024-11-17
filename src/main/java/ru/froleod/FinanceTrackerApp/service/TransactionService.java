@@ -25,7 +25,7 @@ public class TransactionService {
         return transactionRepository.findByBudgetId(budgetId);
     }
 
-
-
-    // Other CRUD methods if necessary...
+    public List<Transaction> findTransactionsByFinancialGoalId(Long financialGoalId) {
+        return transactionRepository.findByFinancialGoalId(financialGoalId);
+    }
 }

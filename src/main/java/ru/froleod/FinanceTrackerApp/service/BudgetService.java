@@ -43,8 +43,6 @@ public class BudgetService {
                     existingBudget.setName(updatedBudget.getName());
                     existingBudget.setAmount(updatedBudget.getAmount());
                     existingBudget.setMonth(updatedBudget.getMonth());
-//                    existingBudget.setStartDate(updatedBudget.getStartDate());
-//                    existingBudget.setEndDate(updatedBudget.getEndDate());
                     existingBudget.setStatus(updatedBudget.getStatus());
                     return budgetRepository.save(existingBudget);
                 })

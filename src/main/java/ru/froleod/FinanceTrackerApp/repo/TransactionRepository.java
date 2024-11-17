@@ -10,10 +10,12 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByBudget(Budget budget);  // Найти все транзакции для конкретного банковского счета
+    List<Transaction> findByBudget(Budget budget);
 
     List<Transaction> findByBudgetBankAccountUserId(long userId);
 
     List<Transaction> findByBudgetId(long budgetId);
+
+    List<Transaction> findByFinancialGoalId(Long financialGoalId);
 }
 
