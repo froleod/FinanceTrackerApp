@@ -23,17 +23,18 @@
         <tr th:each="budget : ${budgets}">
             <td th:text="${budget.name}"></td>
             <td th:text="${budget.amount}"></td>
-            <td th:text="${budget.month}"></td>
-            <td th:text="${budget.status}"></td>
+            <td th:text="${budget.month.name()}"></td>
+            <td th:text="${budget.status.name()}"></td>
             <td>
+                <a th:href="@{/budgets/{id}/transactions(id=${budget.id})}" class="btn btn-info btn-sm">View Transactions</a>
                 <a th:href="@{/budgets/edit/{id}(id=${budget.id})}" class="btn btn-warning btn-sm">Edit</a>
                 <a th:href="@{/budgets/delete/{id}(id=${budget.id})}" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a href="/budgets/create" class="btn btn-success">Add New Budget</a>
-    <a href="/" class="btn btn-secondary">Back to Home</a>
+    <a href="/budgets/create" class="btn btn-success mt-3">Add New Budget</a>
+    <a href="/" class="btn btn-secondary mt-3">Back to Home</a>
 </div>
 </body>
 </html>

@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.froleod.FinanceTrackerApp.model.BankAccount;
 import ru.froleod.FinanceTrackerApp.model.Budget;
+import ru.froleod.FinanceTrackerApp.model.Transaction;
 import ru.froleod.FinanceTrackerApp.model.User;
 import ru.froleod.FinanceTrackerApp.model.enums.BudgetStatus;
 import ru.froleod.FinanceTrackerApp.model.enums.Months;
 import ru.froleod.FinanceTrackerApp.repo.BudgetRepository;
 import ru.froleod.FinanceTrackerApp.repo.UserRepository;
 import ru.froleod.FinanceTrackerApp.service.BankAccountService;
+import ru.froleod.FinanceTrackerApp.service.TransactionService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,6 +36,9 @@ public class BudgetPageController {
 
     @Autowired
     private BankAccountService bankAccountService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @GetMapping
     public String viewBudgets(Model model) {
@@ -107,6 +112,17 @@ public class BudgetPageController {
 
         return "redirect:/budgets";
     }
+
+    @GetMapping("/{id}/transactions")
+    public String viewBudgetTransactions(@PathVariable Long id, Model model) {
+        Budget budget = budgetRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Budget not found"));
+        List<Transaction> transactions = transactionService.findTransactionsByBudgetId(id);
+        model.addAttribute("budget", budget);
+        model.addAttribute("transactions", transactions);
+        return "budget-transactions"; // название шаблона, который будет использоваться для отображения
+    }
+
 
 
 }

@@ -21,6 +21,11 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
+    public List<Transaction> findTransactionsByBudgetId(Long budgetId) {
+        return transactionRepository.findByBudgetId(budgetId);
+    }
+
+
 
     // Other CRUD methods if necessary...
 }

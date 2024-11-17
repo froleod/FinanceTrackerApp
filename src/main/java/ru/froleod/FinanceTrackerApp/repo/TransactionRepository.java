@@ -13,5 +13,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByBudget(Budget budget);  // Найти все транзакции для конкретного банковского счета
 
     List<Transaction> findByBudgetBankAccountUserId(long userId);
+
+    List<Transaction> findByBudgetId(long budgetId);
 }
 
