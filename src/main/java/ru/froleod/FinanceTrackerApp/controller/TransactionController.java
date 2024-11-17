@@ -37,14 +37,8 @@ package ru.froleod.FinanceTrackerApp.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.froleod.FinanceTrackerApp.model.Budget;
-import ru.froleod.FinanceTrackerApp.model.Transaction;
 import ru.froleod.FinanceTrackerApp.service.BudgetService;
 import ru.froleod.FinanceTrackerApp.service.TransactionService;
 
@@ -58,13 +52,13 @@ public class TransactionController {
     @Autowired
     private BudgetService budgetService; // Assuming it exists
 
-    @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction, @RequestParam Long budgetId) throws Exception {
-        Budget budget = budgetService.getBudgetById(budgetId)
-                .orElseThrow(() -> new Exception("Budget not found"));
-        transaction.setBudget(budget);
-        return ResponseEntity.ok(transactionService.createTransaction(transaction));
-    }
+//    @PostMapping
+//    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction, @RequestParam Long budgetId) throws Exception {
+//        Budget budget = budgetService.getBudgetById(budgetId)
+//                .orElseThrow(() -> new Exception("Budget not found"));
+//        transaction.setBudget(budget);
+//        return ResponseEntity.ok(transactionService.saveTransaction(transaction));
+//    }
 
     // Other endpoints...
 }

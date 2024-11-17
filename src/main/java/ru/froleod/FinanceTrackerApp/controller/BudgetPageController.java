@@ -85,18 +85,6 @@ public class BudgetPageController {
         return "edit-budget";
     }
 
-//    @PostMapping("/edit/{id}")
-//    public String updateBudget(@PathVariable Long id, @ModelAttribute Budget budget) {
-//        Budget existingBudget = budgetRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Budget not found"));
-//        existingBudget.setName(budget.getName());
-//        existingBudget.setAmount(budget.getAmount());
-//        existingBudget.setMonth(budget.getMonth());
-//        existingBudget.setStatus(budget.getStatus());
-//        budgetRepository.save(existingBudget);
-//        return "redirect:/budgets";
-//    }
-
     @PostMapping("/edit/{id}")
     public String updateBudget(
             @PathVariable Long id,

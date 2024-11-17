@@ -14,26 +14,24 @@
         <tr>
             <th>Name</th>
             <th>Amount</th>
-            <th>Date</th>
             <th>Type</th>
-            <th>Actions</th>
+            <th>Date</th>
+            <th>Budget</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="transaction : ${transactions}">
             <td th:text="${transaction.name}"></td>
             <td th:text="${transaction.amount}"></td>
-            <td th:text="${transaction.transactionDate}"></td>
             <td th:text="${transaction.type}"></td>
-            <td>
-                <a th:href="@{/transactions/edit/{id}(id=${transaction.id})}" class="btn btn-warning btn-sm">Edit</a>
-                <a th:href="@{/transactions/delete/{id}(id=${transaction.id})}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
+            <td th:text="${transaction.transactionDate}"></td>
+            <td th:text="${transaction.budget.name}"></td>
         </tr>
         </tbody>
     </table>
-    <a href="/transactions/create" class="btn btn-success">Add New Transaction</a>
-    <a href="/" class="btn btn-secondary">Back to Home</a>
+    <a href="/transactions/create" class="btn btn-success mt-3">Add New Transaction</a>
+    <a href="/" class="btn btn-secondary mt-3">Back to Home</a>
+
 </div>
 </body>
 </html>
