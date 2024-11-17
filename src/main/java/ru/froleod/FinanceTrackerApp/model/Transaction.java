@@ -15,7 +15,7 @@ import ru.froleod.FinanceTrackerApp.model.base.NamedBaseEntity;
 import ru.froleod.FinanceTrackerApp.model.enums.TransactionType;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Сущность транзакции
@@ -27,18 +27,19 @@ import java.time.LocalDateTime;
 @ToString
 public class Transaction extends NamedBaseEntity {
 
-    /**
-     * Банковский аккаунт
-     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_account_id")
-    private BankAccount bankAccount;
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "financial_goal_id")
+    private FinancialGoal financialGoal;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
     @Column(name = "transaction_date", nullable = false)
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
 
     /**
      * Тип категории

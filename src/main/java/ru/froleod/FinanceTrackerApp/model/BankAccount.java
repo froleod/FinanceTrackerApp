@@ -40,17 +40,10 @@ public class BankAccount extends BaseEntity {
 
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bankAccount", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "transaction_id")
-    private List<Transaction> transactions;
-
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    @JoinColumn(name = "budget_id")
-    private Budget budget; // TODO: связь?
+    private List<Budget> budget;
 
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bankAccount", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "financial_goal_id")
     private List<FinancialGoal> financialGoals;
 
 }

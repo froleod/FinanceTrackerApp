@@ -1,13 +1,11 @@
 package ru.froleod.FinanceTrackerApp.model.enums;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Статус цели
  */
 @Getter
-@RequiredArgsConstructor
 public enum GoalStatus {
 
     ACTIVE("Активный"),
@@ -15,4 +13,8 @@ public enum GoalStatus {
     COMPLETED("Завершен");
 
     private final String name;
+
+    GoalStatus(String name) {
+        this.name = name;
+    }
 }

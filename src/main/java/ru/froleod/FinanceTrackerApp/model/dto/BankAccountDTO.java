@@ -2,10 +2,6 @@ package ru.froleod.FinanceTrackerApp.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import ru.froleod.FinanceTrackerApp.model.Budget;
-import ru.froleod.FinanceTrackerApp.model.FinancialGoal;
-import ru.froleod.FinanceTrackerApp.model.Transaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,15 +19,12 @@ public class BankAccountDTO {
     @Schema(description = "Баланс аккаунта", required = true)
     private BigDecimal balance;
 
-    @Schema(description = "Пользователь", required = true)
+    @Schema(description = "Пользователь, которому принадлежит аккаунт", required = true)
     private UserDTO user;
 
-    @Schema(description = "Транзакции")
-    private List<TransactionDTO> transactions;
+    @Schema(description = "Список бюджетов, связанных с аккаунтом")
+    private List<BudgetDTO> budgets;
 
-    @Schema(description = "Бюджет")
-    private Budget budget; //TODO: связь?
-
-    @Schema(description = "Финансовые цели")
-    private List<FinancialGoal> financialGoals;
+    @Schema(description = "Список финансовых целей, связанных с аккаунтом")
+    private List<FinancialGoalDTO> financialGoals;
 }

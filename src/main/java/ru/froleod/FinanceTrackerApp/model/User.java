@@ -22,7 +22,7 @@ public class User extends BaseEntity {
      * Банковский аккаунт
      */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private BankAccount bankAccounts;
+    private BankAccount bankAccount;
 
     /**
      * Имя

@@ -2,7 +2,6 @@ package ru.froleod.FinanceTrackerApp.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import ru.froleod.FinanceTrackerApp.model.BankAccount;
 
 /**
  * DTO пользователя
@@ -17,7 +16,7 @@ public class UserDTO {
      * Банковский аккаунт
      */
     @Schema(description = "Банковский аккаунт", required = true)
-    private BankAccount bankAccounts;
+    private BankAccountDTO bankAccount;
 
     /**
      * Имя

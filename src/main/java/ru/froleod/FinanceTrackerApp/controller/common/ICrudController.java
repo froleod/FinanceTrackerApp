@@ -3,8 +3,8 @@ package ru.froleod.FinanceTrackerApp.controller.common;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +45,7 @@ public interface ICrudController<T, K> {
             @ApiResponse(responseCode = "401", description = "Ошибка авторизации"),
             @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервиса") })
     @PostMapping("/save")
-    T save(@Valid @RequestBody T object);
+    T save(@Validated @RequestBody T object);
 
     @Operation(summary = "Удаление объекта по ID")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Элемент удалён успешно"),

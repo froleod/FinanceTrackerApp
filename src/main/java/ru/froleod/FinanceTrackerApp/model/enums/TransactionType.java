@@ -1,13 +1,11 @@
 package ru.froleod.FinanceTrackerApp.model.enums;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Тип транзакции
  */
 @Getter
-@RequiredArgsConstructor
 public enum TransactionType {
 
     INCOME("Входящая"),
@@ -15,4 +13,8 @@ public enum TransactionType {
     EXPENSE("Исходящая");
 
     private final String name;
+
+    TransactionType(String name) {
+        this.name = name;
+    }
 }
