@@ -27,8 +27,14 @@
         <a th:href="@{/financial-goals/{id}/transactions(id=${goal.id})}" class="btn btn-info btn-sm">View Transactions</a>
         <a th:href="@{/financial-goals/{id}/create-transaction(id=${goal.id})}" class="btn btn-primary btn-sm">Add Transaction</a>
         <a th:href="@{/financial-goals/edit/{id}(id=${goal.id})}" class="btn btn-warning btn-sm">Edit</a>
-        <a th:href="@{/financial-goals/delete/{id}(id=${goal.id})}" class="btn btn-danger btn-sm">Delete</a>
-        <!-- Дополнительные действия, такие как Редактирование и Удаление -->
+<!--        <form th:action="@{/financial-goals/edit/{id}(id=${goal.id})}" method="post" style="display:inline;">-->
+<!--          <input type="hidden" name="_method" value="edit" />-->
+<!--          <button type="submit" class="btn btn-warning btn-sm">Edit</button>-->
+<!--        </form>-->
+        <form th:action="@{/financial-goals/delete/{id}(id=${goal.id})}" method="post" style="display:inline;">
+          <input type="hidden" name="_method" value="delete" />
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
       </td>
     </tr>
     </tbody>

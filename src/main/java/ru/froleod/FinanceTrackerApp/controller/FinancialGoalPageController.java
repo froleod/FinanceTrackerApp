@@ -3,6 +3,7 @@ package ru.froleod.FinanceTrackerApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import ru.froleod.FinanceTrackerApp.model.FinancialGoal;
 import ru.froleod.FinanceTrackerApp.model.Transaction;
 import ru.froleod.FinanceTrackerApp.model.enums.GoalStatus;
 import ru.froleod.FinanceTrackerApp.model.enums.TransactionType;
+import ru.froleod.FinanceTrackerApp.repo.FinancialGoalRepository;
 import ru.froleod.FinanceTrackerApp.service.BankAccountService;
 import ru.froleod.FinanceTrackerApp.service.FinancialGoalService;
 import ru.froleod.FinanceTrackerApp.service.TransactionService;
@@ -28,6 +30,9 @@ public class FinancialGoalPageController {
 
     @Autowired
     private FinancialGoalService financialGoalService;
+
+    @Autowired
+    private FinancialGoalRepository financialGoalRepository;
 
     @Autowired
     private TransactionService transactionService;
@@ -110,6 +115,39 @@ public class FinancialGoalPageController {
                 .orElseThrow(() -> new RuntimeException("Financial Goal not found"));
         model.addAttribute("financialGoal", financialGoal);
         return "edit-financial-goal";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateFinancialGoalForm(@PathVariable Long id,
+                                          @RequestParam String name,
+                                          @RequestParam BigDecimal targetAmount,
+                                          @RequestParam String startDate,
+                                          @RequestParam String endDate,
+                                          @RequestParam String status) {
+
+//        FinancialGoal financialGoal = financialGoalService.getFinancialGoalById(id)
+//                .orElseThrow(() -> new RuntimeException("Financial Goal not found"));
+        FinancialGoal financialGoal = financialGoalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Financial Goal not found"));
+        financialGoal.setName(name);
+        financialGoal.setTargetAmount(targetAmount);
+        if(startDate != null && !startDate.isEmpty()) {
+            financialGoal.setStartDate(LocalDate.parse(startDate));
+        }
+        if(endDate != null && !endDate.isEmpty()) {
+            financialGoal.setEndDate(LocalDate.parse(endDate));
+
+        }
+        GoalStatus goalStatus = GoalStatus.valueOf(status.toUpperCase());
+        financialGoal.setStatus(goalStatus);
+        financialGoalRepository.save(financialGoal);
+        return "redirect:/financial-goals";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteFinancialGoal(@PathVariable Long id) {
+        financialGoalService.deleteFinancialGoal(id);
+        return "redirect:/financial-goals";
     }
 
     @GetMapping("/{goalId}/create-transaction")

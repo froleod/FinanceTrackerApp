@@ -4,6 +4,7 @@ package ru.froleod.FinanceTrackerApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -110,6 +111,12 @@ public class BudgetPageController {
         // Сохраняем обновленный бюджет
         budgetRepository.save(existingBudget);
 
+        return "redirect:/budgets";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteBudget(@PathVariable Long id) {
+        budgetRepository.deleteById(id);
         return "redirect:/budgets";
     }
 
