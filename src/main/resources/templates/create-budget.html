@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <h2>Create Budget</h2>
     <form action="/budgets" method="post">
-        <input type="hidden" name="bankAccountId" value="1">
+        <input type="hidden" name="bankAccountId" th:value="${bankAccountId}">
         <div class="form-group">
             <label for="name">Budget Name</label>
             <input type="text" class="form-control" id="name" name="name" required>

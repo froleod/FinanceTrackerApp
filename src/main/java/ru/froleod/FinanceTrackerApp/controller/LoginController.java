@@ -2,9 +2,7 @@ package ru.froleod.FinanceTrackerApp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
@@ -15,11 +13,11 @@ public class LoginController {
         return "login"; // Это указывает на файл login.html в resources/templates
     }
 
-    @PostMapping
-    public String handleLogin(@RequestParam String username, @RequestParam String password) {
-        // Логика авторизации пользователя, например проверка в БД
-        // Если успешная авторизация:
-        return "redirect:/bank-account"; // Перенаправление на страницу банковского аккаунта
-    }
+//    @PostMapping
+//    public String handleLogin(@RequestParam String username, @RequestParam String password) {
+//        // Логика авторизации пользователя, например проверка в БД
+//        // Если успешная авторизация:
+//        return "redirect:/bank-account"; // Перенаправление на страницу банковского аккаунта
+//    }
 }
 

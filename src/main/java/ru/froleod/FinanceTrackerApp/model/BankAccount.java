@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import ru.froleod.FinanceTrackerApp.model.base.BaseEntity;
 
 import java.math.BigDecimal;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "bank_account")
 public class BankAccount extends BaseEntity {
