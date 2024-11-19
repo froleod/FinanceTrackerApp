@@ -33,4 +33,8 @@ public class BankAccountService {
     public void deleteBankAccount(Long id) {
         bankAccountRepository.deleteById(id);
     }
+
+    public BankAccount getBankAccountByUserUsername(String username) {
+        return bankAccountRepository.findBankAccountByUserUsername(username);
+    }
 }

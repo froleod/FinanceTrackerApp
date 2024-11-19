@@ -1,9 +1,12 @@
 package ru.froleod.FinanceTrackerApp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import ru.froleod.FinanceTrackerApp.model.base.BaseEntity;
 
 /**
@@ -13,7 +16,6 @@ import ru.froleod.FinanceTrackerApp.model.base.BaseEntity;
 @Getter
 @Setter
 @Table(name = "users")
-@ToString
 public class User extends BaseEntity {
 
     private static final int STRING_LENGTH = 64;
@@ -41,6 +43,11 @@ public class User extends BaseEntity {
      */
     @Column(name = "middle_name", length = STRING_LENGTH)
     private String middleName;
+
+    @Column(name = "username", unique = true)
+    private String username;
+
+    private String roles;
 
     /**
      * Пароль

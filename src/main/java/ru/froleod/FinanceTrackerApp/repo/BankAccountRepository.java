@@ -8,4 +8,6 @@ import ru.froleod.FinanceTrackerApp.model.BankAccount;
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
     BankAccount findByUserId(Long userId);
+
+    BankAccount findBankAccountByUserUsername(String username);
 }

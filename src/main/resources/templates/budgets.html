@@ -27,6 +27,7 @@
             <td th:text="${budget.status.name()}"></td>
             <td>
                 <a th:href="@{/budgets/{id}/transactions(id=${budget.id})}" class="btn btn-info btn-sm">View Transactions</a>
+                <a th:href="@{/budgets/{id}/create-transaction(id=${budget.id})}" class="btn btn-primary btn-sm">Add Transaction</a>
                 <a th:href="@{/budgets/edit/{id}(id=${budget.id})}" class="btn btn-warning btn-sm">Edit</a>
                 <form th:action="@{/budgets/delete/{id}(id=${budget.id})}" method="post" style="display:inline;">
                     <input type="hidden" name="_method" value="delete" />
