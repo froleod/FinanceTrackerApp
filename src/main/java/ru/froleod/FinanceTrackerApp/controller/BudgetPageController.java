@@ -150,6 +150,15 @@ public class BudgetPageController {
         return "budget-transactions"; // название шаблона, который будет использоваться для отображения
     }
 
+//    @GetMapping("/{budgetId}/create-transaction")
+//    public String createTransactionForm(@PathVariable Long budgetId, Model model) {
+//        Optional<Budget> budget = budgetRepository.findById(budgetId);
+//
+//        model.addAttribute("budget", budget);
+//        model.addAttribute("transaction", new Transaction());
+//        return "create-transaction";
+//    }
+
 
 
 }

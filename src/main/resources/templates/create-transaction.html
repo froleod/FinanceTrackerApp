@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="budget">Budget</label>
             <select class="form-control" id="budget" name="budgetId" required>
-                <option th:each="budget : ${budgets}" th:value="${budget.id}" th:text="${budget.name}"/>
+                <option th:each="budget : ${budgets}" th:value="${budget.id}" th:text="${budget.name}"></option>
             </select>
         </div>
         <div class="form-group">
