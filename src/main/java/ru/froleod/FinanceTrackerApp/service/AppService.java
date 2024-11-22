@@ -12,6 +12,7 @@ import ru.froleod.FinanceTrackerApp.repo.UserRepository;
 @AllArgsConstructor
 @Slf4j
 public class AppService {
+
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;

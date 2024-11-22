@@ -8,6 +8,6 @@ public class LogoutController {
 
     @GetMapping("/logout")
     public String logout() {
-        return "redirect:/login?logout";
+        return "redirect:/auth/login?logout";
     }
 }

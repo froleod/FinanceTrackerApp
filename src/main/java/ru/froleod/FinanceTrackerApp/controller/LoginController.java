@@ -10,14 +10,7 @@ public class LoginController {
 
     @GetMapping
     public String showLoginPage() {
-        return "login"; // Это указывает на файл login.html в resources/templates
+        return "auth/login";
     }
-
-//    @PostMapping
-//    public String handleLogin(@RequestParam String username, @RequestParam String password) {
-//        // Логика авторизации пользователя, например проверка в БД
-//        // Если успешная авторизация:
-//        return "redirect:/bank-account"; // Перенаправление на страницу банковского аккаунта
-//    }
 }
 

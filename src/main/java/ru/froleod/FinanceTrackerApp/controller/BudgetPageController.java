@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.froleod.FinanceTrackerApp.model.BankAccount;
 import ru.froleod.FinanceTrackerApp.model.Budget;
 import ru.froleod.FinanceTrackerApp.model.Transaction;
-import ru.froleod.FinanceTrackerApp.model.enums.BudgetStatus;
 import ru.froleod.FinanceTrackerApp.model.enums.Months;
-import ru.froleod.FinanceTrackerApp.repo.BudgetRepository;
-import ru.froleod.FinanceTrackerApp.repo.UserRepository;
 import ru.froleod.FinanceTrackerApp.service.BankAccountService;
+import ru.froleod.FinanceTrackerApp.service.BudgetService;
 import ru.froleod.FinanceTrackerApp.service.TransactionService;
 
 import java.math.BigDecimal;
@@ -32,18 +30,15 @@ import java.util.List;
 public class BudgetPageController {
 
     @Autowired
-    private BudgetRepository budgetRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private BankAccountService bankAccountService;
 
     @Autowired
     private TransactionService transactionService;
 
-    private String getCurrentUsername() {
+    @Autowired
+    private BudgetService budgetService;
+
+    public static String getCurrentUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return (auth.getPrincipal() instanceof UserDetails) ?
                 ((UserDetails) auth.getPrincipal()).getUsername() : auth.getName();
@@ -52,19 +47,9 @@ public class BudgetPageController {
 
     @GetMapping
     public String viewBudgets(Model model) {
-        String username = getCurrentUsername();
-        List<Budget> budgets = budgetRepository.findByBankAccountUserUsername(username);
-        model.addAttribute("budgets", budgets);
-        return "budgets";
+        model.addAttribute("budgets", budgetService.viewBudgets());
+        return "budgets/budgets";
     }
-
-
-//    @GetMapping("/create")
-//    public String createBudgetForm(Model model) {
-//        model.addAttribute("budget", new Budget());
-//        model.addAttribute("months", Months.values());
-//        return "create-budget";
-//    }
 
     @GetMapping("/create")
     public String createBudgetForm(Model model) {
@@ -73,41 +58,24 @@ public class BudgetPageController {
         model.addAttribute("bankAccountId", bankAccount.getId());
         model.addAttribute("budget", new Budget());
         model.addAttribute("months", Months.values());
-        return "create-budget";
+        return "budgets/create-budget";
     }
 
 
     @PostMapping
     public String createBudget(@ModelAttribute Budget budget, @RequestParam Long bankAccountId, @RequestParam String month,
                                @RequestParam String name, @RequestParam BigDecimal amount) {
-        // Получение банковского счета через ID
-        BankAccount bankAccount = bankAccountService.getBankAccountById(bankAccountId)
-                .orElseThrow(() -> new RuntimeException("BankAccount not found with id " + bankAccountId));
-
-        // Преобразование строки в enum
-        Months monthEnum;
-        try {
-            monthEnum = Months.valueOf(month.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid month value: " + month);
-        }
-
-        budget.setMonth(monthEnum);
-        budget.setBankAccount(bankAccount);
-        budget.setAmount(amount);
-        budget.setName(name);
-        budget.setStatus(BudgetStatus.ACTIVE);
-        budgetRepository.save(budget);
-        return "redirect:/budgets";
+        budgetService.createBudget(budget, bankAccountId, month, name, amount);
+        return "redirect:/budgets/budgets";
     }
 
     @GetMapping("/edit/{id}")
     public String editBudgetForm(@PathVariable Long id, Model model) {
-        Budget budget = budgetRepository.findById(id)
+        Budget budget = budgetService.getBudgetById(id)
                 .orElseThrow(() -> new RuntimeException("Budget not found"));
         model.addAttribute("budget", budget);
         model.addAttribute("months", Months.values());
-        return "edit-budget";
+        return "budgets/edit-budget";
     }
 
     @PostMapping("/edit/{id}")
@@ -118,47 +86,24 @@ public class BudgetPageController {
             @RequestParam String month,
             @RequestParam String status
     ) {
-        Budget existingBudget = budgetRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Budget not found"));
-
-        // Обновляем поля
-        existingBudget.setName(name);
-        existingBudget.setAmount(amount);
-        existingBudget.setMonth(Months.valueOf(month.toUpperCase()));
-        existingBudget.setStatus(BudgetStatus.valueOf(status.toUpperCase()));
-
-        // Сохраняем обновленный бюджет
-        budgetRepository.save(existingBudget);
-
-        return "redirect:/budgets";
+        budgetService.updateBudget(id, name, amount, month, status);
+        return "redirect:/budgets/budgets";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteBudget(@PathVariable Long id) {
-        budgetRepository.deleteById(id);
-        return "redirect:/budgets";
+        budgetService.deleteBudget(id);
+        return "redirect:/budgets/budgets";
     }
 
     @GetMapping("/{id}/transactions")
     public String viewBudgetTransactions(@PathVariable Long id, Model model) {
-        String username = getCurrentUsername();
-        Budget budget = budgetRepository.findById(id)
+        Budget budget = budgetService.getBudgetById(id)
                 .orElseThrow(() -> new RuntimeException("Budget not found"));
         List<Transaction> transactions = transactionService.findTransactionsByBudgetId(id);
         model.addAttribute("budget", budget);
         model.addAttribute("transactions", transactions);
-        return "budget-transactions"; // название шаблона, который будет использоваться для отображения
+        return "budgets/budget-transactions";
     }
-
-//    @GetMapping("/{budgetId}/create-transaction")
-//    public String createTransactionForm(@PathVariable Long budgetId, Model model) {
-//        Optional<Budget> budget = budgetRepository.findById(budgetId);
-//
-//        model.addAttribute("budget", budget);
-//        model.addAttribute("transaction", new Transaction());
-//        return "create-transaction";
-//    }
-
-
 
 }

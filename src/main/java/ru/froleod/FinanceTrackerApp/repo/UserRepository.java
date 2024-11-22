@@ -8,5 +8,4 @@ import ru.froleod.FinanceTrackerApp.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
-
 }

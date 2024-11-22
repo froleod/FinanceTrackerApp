@@ -5,21 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.froleod.FinanceTrackerApp.model.BankAccount;
-import ru.froleod.FinanceTrackerApp.model.User;
-import ru.froleod.FinanceTrackerApp.service.AppService;
-
-import java.math.BigDecimal;
+import ru.froleod.FinanceTrackerApp.service.RegistrationService;
 
 @Controller
 @AllArgsConstructor
 public class RegistrationController {
 
-    private AppService appService;
+    private final RegistrationService registrationService;
 
     @GetMapping("/registration")
     public String registration(){
-        return "registration";
+        return "auth/registration";
     }
 
     @PostMapping("/registration")
@@ -29,27 +25,9 @@ public class RegistrationController {
 
                           @ModelAttribute("username") String username,
                           @ModelAttribute("password") String password) {
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setMiddleName(middleName);
-        user.setBankAccount(new BankAccount());
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setRoles("ROLE_USER");
-        BankAccount bankAccount = new BankAccount();
-        bankAccount.setAccountNumber(generateAccountNumber());
-        bankAccount.setBalance(BigDecimal.valueOf(100000));
-        bankAccount.setUser(user);
-        user.setBankAccount(bankAccount);
 
-        // Сохраняем пользователя
-        appService.addUser(user);
-
-        return "redirect:/login";
+        registrationService.addUser(firstName, lastName, middleName, username, password);
+        return "redirect:/auth/login";
     }
 
-    private String generateAccountNumber() {
-        return "BA" + System.currentTimeMillis();
-    }
 }
