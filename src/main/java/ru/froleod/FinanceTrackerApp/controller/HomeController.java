@@ -23,6 +23,6 @@ public class HomeController {
         if (user != null) {
             model.addAttribute("user", user);
         }
-        return "home"; // Это направляет на home.html
+        return "auth/home";
     }
 }
