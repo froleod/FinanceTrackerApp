@@ -51,7 +51,7 @@ public class TransactionPageController {
                                     @RequestParam String description) {
 
         transactionService.createTransaction(budgetId, name, amount, type, transactionDate, description);
-        return "redirect:/transactions/transactions";
+        return "redirect:/transactions";
     }
 
     @GetMapping

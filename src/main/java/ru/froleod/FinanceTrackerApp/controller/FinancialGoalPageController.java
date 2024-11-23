@@ -52,7 +52,7 @@ public class FinancialGoalPageController {
             @RequestParam String endDate,
             @RequestParam String status) {
         financialGoalService.createFinancialGoal(bankAccountId, name, targetAmount, startDate, endDate, status);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
 
@@ -98,13 +98,13 @@ public class FinancialGoalPageController {
                                           @RequestParam String status) {
 
         financialGoalService.updateFinancialGoalForm(id, name, targetAmount, startDate, endDate, status);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteFinancialGoal(@PathVariable Long id) {
         financialGoalService.deleteFinancialGoal(id);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
     @GetMapping("/{goalId}/create-transaction")
@@ -127,7 +127,7 @@ public class FinancialGoalPageController {
             @RequestParam String type) {
 
         financialGoalService.createTransactionForGoal(goalId, name, amount, transactionDate, type);
-        return "redirect:/financialGoals/financial-goals/" + goalId + "/transactions/transactions";
+        return "redirect:/financial-goals/" + goalId + "/transactions/transactions";
     }
 
 }
