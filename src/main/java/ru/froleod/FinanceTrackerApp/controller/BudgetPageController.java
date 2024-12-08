@@ -1,6 +1,7 @@
 package ru.froleod.FinanceTrackerApp.controller;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/budgets")
+@Tag(name="Контроллер бюджетов", description = "Операции, связанные с бюджетами")
 public class BudgetPageController {
 
     @Autowired
@@ -63,10 +65,13 @@ public class BudgetPageController {
 
 
     @PostMapping
-    public String createBudget(@ModelAttribute Budget budget, @RequestParam Long bankAccountId, @RequestParam String month,
-                               @RequestParam String name, @RequestParam BigDecimal amount) {
+    public String createBudget(@ModelAttribute Budget budget,
+                               @RequestParam Long bankAccountId,
+                               @RequestParam String month,
+                               @RequestParam String name,
+                               @RequestParam BigDecimal amount) {
         budgetService.createBudget(budget, bankAccountId, month, name, amount);
-        return "redirect:/budgets/budgets";
+        return "redirect:/budgets";
     }
 
     @GetMapping("/edit/{id}")
@@ -87,13 +92,13 @@ public class BudgetPageController {
             @RequestParam String status
     ) {
         budgetService.updateBudget(id, name, amount, month, status);
-        return "redirect:/budgets/budgets";
+        return "redirect:/budgets";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteBudget(@PathVariable Long id) {
         budgetService.deleteBudget(id);
-        return "redirect:/budgets/budgets";
+        return "redirect:/budgets";
     }
 
     @GetMapping("/{id}/transactions")

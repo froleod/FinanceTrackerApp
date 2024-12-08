@@ -127,7 +127,7 @@ public class FinancialGoalPageController {
             @RequestParam String type) {
 
         financialGoalService.createTransactionForGoal(goalId, name, amount, transactionDate, type);
-        return "redirect:/financial-goals/" + goalId + "/transactions/transactions";
+        return "redirect:/financial-goals/" + goalId + "/transactions";
     }
 
 }
