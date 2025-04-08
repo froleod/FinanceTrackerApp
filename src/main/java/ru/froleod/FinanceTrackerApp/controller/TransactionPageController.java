@@ -1,5 +1,7 @@
 package ru.froleod.FinanceTrackerApp.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import static ru.froleod.FinanceTrackerApp.controller.BudgetPageController.getCu
 
 @Controller
 @RequestMapping("/transactions")
+@Tag(name = "Контроллер транзакций", description = "Операции, связанные с транзакциями")
 public class TransactionPageController {
 
     @Autowired
@@ -34,6 +37,7 @@ public class TransactionPageController {
     @Autowired
     private BudgetService budgetService;
 
+    @Operation(summary = "Форма создания транзакции", description = "Отображает форму для создания новой транзакции.")
     @GetMapping("/create")
     public String createTransactionForm(Model model) {
         String username = getCurrentUsername();
@@ -42,6 +46,7 @@ public class TransactionPageController {
         return "transactions/create-transaction";
     }
 
+    @Operation(summary = "Создание транзакции", description = "Создает новую транзакцию и сохраняет её в базе данных.")
     @PostMapping
     public String createTransaction(@RequestParam Long budgetId,
                                     @RequestParam String name,
@@ -51,9 +56,10 @@ public class TransactionPageController {
                                     @RequestParam String description) {
 
         transactionService.createTransaction(budgetId, name, amount, type, transactionDate, description);
-        return "redirect:/transactions/transactions";
+        return "redirect:/transactions";
     }
 
+    @Operation(summary = "Просмотр транзакций", description = "Отображает список транзакций пользователя.")
     @GetMapping
     public String viewTransactions(Model model) {
         String username = getCurrentUsername();

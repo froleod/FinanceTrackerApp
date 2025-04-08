@@ -1,5 +1,7 @@
 package ru.froleod.FinanceTrackerApp.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/financial-goals")
+@Tag(name = "Контроллер финансовых целей", description = "Операции, связанные с управлением финансовыми целями")
 public class FinancialGoalPageController {
 
     @Autowired
@@ -30,6 +33,7 @@ public class FinancialGoalPageController {
     private TransactionService transactionService;
 
 
+    @Operation(summary = "Просмотр всех финансовых целей", description = "Возвращает страницу со списком всех финансовых целей.")
     @GetMapping
     public String viewFinancialGoals(Model model) {
         List<FinancialGoal> financialGoals = financialGoalService.getAllFinancialGoals();
@@ -37,12 +41,14 @@ public class FinancialGoalPageController {
         return "financialGoals/financial-goals";
     }
 
+    @Operation(summary = "Открытие формы для создания финансовой цели", description = "Возвращает страницу для создания новой финансовой цели.")
     @GetMapping("/create")
     public String createFinancialGoalForm(Model model) {
         model.addAttribute("financialGoal", new FinancialGoal());
         return "financialGoals/create-financial-goal";
     }
 
+    @Operation(summary = "Создание новой финансовой цели", description = "Создает новую финансовую цель с указанными параметрами.")
     @PostMapping
     public String createFinancialGoal(
             @RequestParam Long bankAccountId,
@@ -52,10 +58,11 @@ public class FinancialGoalPageController {
             @RequestParam String endDate,
             @RequestParam String status) {
         financialGoalService.createFinancialGoal(bankAccountId, name, targetAmount, startDate, endDate, status);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
 
+    @Operation(summary = "Просмотр транзакций по финансовой цели", description = "Возвращает страницу с транзакциями для указанной финансовой цели.")
     @GetMapping("/{id}/transactions")
     public String viewTransactionsForGoal(@PathVariable Long id, Model model) {
         FinancialGoal financialGoal = financialGoalService.getFinancialGoalById(id)
@@ -81,6 +88,7 @@ public class FinancialGoalPageController {
         return "transactions/goal-transactions";
     }
 
+    @Operation(summary = "Открытие формы для редактирования финансовой цели", description = "Возвращает страницу для редактирования финансовой цели по ID.")
     @GetMapping("/edit/{id}")
     public String editFinancialGoalForm(@PathVariable Long id, Model model) {
         FinancialGoal financialGoal = financialGoalService.getFinancialGoalById(id)
@@ -89,6 +97,7 @@ public class FinancialGoalPageController {
         return "financialGoals/edit-financial-goal";
     }
 
+    @Operation(summary = "Обновление финансовой цели", description = "Обновляет финансовую цель с указанными параметрами.")
     @PostMapping("/edit/{id}")
     public String updateFinancialGoalForm(@PathVariable Long id,
                                           @RequestParam String name,
@@ -98,15 +107,17 @@ public class FinancialGoalPageController {
                                           @RequestParam String status) {
 
         financialGoalService.updateFinancialGoalForm(id, name, targetAmount, startDate, endDate, status);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
+    @Operation(summary = "Удаление финансовой цели", description = "Удаляет финансовую цель по ID.")
     @DeleteMapping("/delete/{id}")
     public String deleteFinancialGoal(@PathVariable Long id) {
         financialGoalService.deleteFinancialGoal(id);
-        return "redirect:/financialGoals/financial-goals";
+        return "redirect:/financial-goals";
     }
 
+    @Operation(summary = "Открытие формы для создания транзакции по финансовой цели", description = "Возвращает страницу для добавления транзакции к финансовой цели.")
     @GetMapping("/{goalId}/create-transaction")
     public String createTransactionForGoalForm(@PathVariable Long goalId, Model model) {
         FinancialGoal financialGoal = financialGoalService.getFinancialGoalById(goalId)
@@ -118,6 +129,7 @@ public class FinancialGoalPageController {
     }
 
 
+    @Operation(summary = "Создание транзакции по финансовой цели", description = "Добавляет новую транзакцию для указанной финансовой цели.")
     @PostMapping("/{goalId}/transactions")
     public String createTransactionForGoal(
             @PathVariable Long goalId,
@@ -127,7 +139,7 @@ public class FinancialGoalPageController {
             @RequestParam String type) {
 
         financialGoalService.createTransactionForGoal(goalId, name, amount, transactionDate, type);
-        return "redirect:/financialGoals/financial-goals/" + goalId + "/transactions/transactions";
+        return "redirect:/financial-goals/" + goalId + "/transactions";
     }
 
 }
