@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  pg_finance:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=aks
+      - POSTGRES_DB=FinanceTrackerDB
+#  app:
+#    restart: always
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - pg_finance
+#    container_name: app
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://pg_finance:5432/FinanceTrackerDB
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: aks
